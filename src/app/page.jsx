@@ -1,6 +1,8 @@
 "use client";
 import React from 'react';
 import { useRef } from 'react';
+import Navbar from "@/components/Navbar";
+
 
 const LandingPage = () => {
 
@@ -16,6 +18,7 @@ const LandingPage = () => {
   return (
     <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen text-gray-100 font-sans">
       {/* Hero Section */}
+      <Navbar />
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12">
           <div className="lg:w-1/2 space-y-8">
