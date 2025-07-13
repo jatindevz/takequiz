@@ -2,6 +2,7 @@
 import React from 'react';
 import { useRef } from 'react';
 import Navbar from "@/components/Navbar";
+import Link from 'next/link';
 
 
 const LandingPage = () => {
@@ -154,17 +155,11 @@ const LandingPage = () => {
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
             Ready to Create Your First AI-Powered Quiz?
           </h2>
-          {/* <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
-            Join thousands of educators and content creators who are already using QuizMaster
-          </p> */}
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-medium  transition-all duration-300 transform hover:scale-105 shadow-lg ">
+            <Link href="/login" className="px-8 py-3 rounded-lg bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-medium  transition-all duration-300 transform hover:scale-105 shadow-lg ">
               Get Started for Free
-            </button>
-            {/* <button className="px-8 py-3 rounded-lg bg-gray-800 text-white font-medium border border-gray-700 hover:border-cyan-500 transition-all duration-300">
-              Schedule a Demo
-            </button> */}
+            </Link>
           </div>
 
           

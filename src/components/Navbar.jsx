@@ -1,5 +1,7 @@
 'use client';
+import Link from 'next/link';
 import React, { useState } from 'react';
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,36 +12,19 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            {/* <div className="h-8 w-8 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"></div> */}
             <span className="ml-2 text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500">
               QuizMaster
             </span>
           </div>
 
-          {/* Desktop Menu (hidden on mobile)
-          <div className="hidden md:flex items-center justify-center flex-1">
-            <div className="flex space-x-8">
-              {['Home', 'Features', 'How It Works'].map((item) => (
-                <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="text-gray-300 hover:text-white px-1 py-2 relative group transition-all duration-300"
-                >
-                  {item}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
-                </a>
-              ))}
-            </div>
-          </div> */}
-
           {/* Right Buttons (desktop) */}
           <div className="hidden md:flex items-center space-x-4">
-            <button className="px-4 py-2 rounded-md text-sm font-medium bg-gradient-to-r from-cyan-600 to-blue-600 text-white transition-all duration-300 transform hover:scale-105 shadow-lg">
+            <Link href="/" className="px-4 py-2 rounded-md text-sm font-medium bg-gradient-to-r from-cyan-600 to-blue-600 text-white transition-all duration-300 transform hover:scale-105 shadow-lg">
               Make Your Own Quiz
-            </button>
-            <button className="px-4 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-800 transition-all duration-300 border border-gray-700 hover:border-cyan-500">
+            </Link>
+            <Link href="/login" className="px-4 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-800 transition-all duration-300 border border-gray-700 hover:border-cyan-500">
               Login
-            </button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
