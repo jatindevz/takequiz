@@ -1,10 +1,12 @@
 'use client';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const {data : session} = useSession()
 
   return (
     <nav className="bg-gray-900 border-b border-gray-700 shadow-xl sticky top-0 z-50">
@@ -22,9 +24,15 @@ const Navbar = () => {
             <Link href="/" className="px-4 py-2 rounded-md text-sm font-medium bg-gradient-to-r from-cyan-600 to-blue-600 text-white transition-all duration-300 transform hover:scale-105 shadow-lg">
               Make Your Own Quiz
             </Link>
+            {session ? (
+            <Link href="/dashboard" className="px-4 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-800 transition-all duration-300 border border-gray-700 hover:border-cyan-500">
+              Dashboard
+            </Link>
+            ) : (
             <Link href="/login" className="px-4 py-2 rounded-md text-sm font-medium text-white hover:bg-gray-800 transition-all duration-300 border border-gray-700 hover:border-cyan-500">
               Login
             </Link>
+            )}
           </div>
 
           {/* Mobile menu button */}
