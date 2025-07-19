@@ -2,6 +2,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sparkles, Zap, Brain, Rocket, BookOpen, Code, Globe, Star } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import LinkSharingComponent from '@/components/LinkSharingComponent';
+import LogoutBtn from '../../../components/LogoutBtn';     
 
 const useTimeGreeting = () => {
   const [greeting, setGreeting] = useState('');
@@ -24,12 +28,21 @@ const useTimeGreeting = () => {
 };
 
 const QuizInputPage = () => {
+  const router = useRouter();
   const timeGreeting = useTimeGreeting();
   const [topic, setTopic] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [focusedCard, setFocusedCard] = useState(null);
   const textareaRef = useRef(null);
-  const {data: session} = useSession();
+  const { data: session } = useSession();
+  const [link, setLink] = useState('');
+  const [origin, setOrigin] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin);
+    }
+  }, []);
+
 
   const adjustTextareaHeight = () => {
     if (textareaRef.current) {
@@ -42,46 +55,32 @@ const QuizInputPage = () => {
     adjustTextareaHeight();
   }, [topic]);
 
-  const handleGenerate = () => setIsGenerating(true);
+  const handleGenerate = async() => {
+    setIsGenerating(true);
 
-  const handleTopicSelect = (selectedTopic) => {
-    setTopic(selectedTopic);
-    if (textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  };
+    try {
+      const res = await axios.post('/api/createquiz', {
+        topic,
+      })
+      const quizid = await res.data.quizId;
+      console.log('Response:', res.data);
 
-  const topicCategories = [
-    {
-      icon: BookOpen,
-      title: 'History Vibes',
-      gradient: 'from-purple-500 to-pink-500',
-      topics: ['Ancient Egypt mysteries', 'WWII untold stories', 'Renaissance art drops', 'American Revolution tea']
-    },
-    {
-      icon: Brain,
-      title: 'Science Facts',
-      gradient: 'from-blue-500 to-cyan-500',
-      topics: ['Quantum physics mind-benders', 'Human body hacks', 'Climate change reality', 'Space exploration wins']
-    },
-    {
-      icon: Code,
-      title: 'Tech Stack',
-      gradient: 'from-green-500 to-teal-500',
-      topics: ['JavaScript wizardry', 'AI & ML basics', 'Cybersecurity 101', 'Blockchain decoded']
-    },
-    {
-      icon: Star,
-      title: 'Pop Culture',
-      gradient: 'from-orange-500 to-red-500',
-      topics: ['Movie trivia hits', 'Sports legends', 'World capitals flex', 'Inventor stories']
+      setLink(`${origin}/dashboard/${quizid.toString()}/quiz`);
+
+    } catch (error) {
+      console.error('Error generating quiz:', error);
     }
-  ];
+
+    setTimeout(() => {
+      setIsGenerating(false);
+    }, 2000);
+  }
+
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Animated background elements */}
-    
+      <LogoutBtn />
       <div className="relative max-w-6xl mx-auto p-6 sm:p-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -143,7 +142,7 @@ const QuizInputPage = () => {
                     {isGenerating ? (
                       <>
                         <div className="animate-spin">⚡</div>
-                        Creating magic...
+                        Generating...
                       </>
                     ) : (
                       <>
@@ -156,7 +155,9 @@ const QuizInputPage = () => {
               </div>
             </div>
           </div>
+          
         </div>
+        { link && < LinkSharingComponent link={link} />}
       </div>
     </div>
   );
