@@ -1,7 +1,6 @@
 import dbConnect from "@/lib/database";
 import UserModel from "@/model/user.model";
 import bcrypt from "bcryptjs";
-import { signIn } from "next-auth/react";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {

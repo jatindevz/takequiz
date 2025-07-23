@@ -2,19 +2,12 @@
 
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/database";
-import Usermodel from "@/model/user.model";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import QuizModel from "../../../model/quizes.model";
-import axios from "axios";
 
 export async function POST(req) {
     await dbConnect();
 
     try {
-        const session = await getServerSession(authOptions);
-        const user = await Usermodel.findOne({ email: session.user.email });
-
         const { quizid, name, email } = await req.json();
 
         console.log("quizid: ", quizid);
